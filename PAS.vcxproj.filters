@@ -1,0 +1,622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\base">
+      <UniqueIdentifier>{070a354d-b0de-49f0-9489-b63f2e06b34d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\2DDrawer">
+      <UniqueIdentifier>{0eafab7a-dc33-4755-b8f9-4e0875f5c917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\MenuManager">
+      <UniqueIdentifier>{20a044ae-ec47-46d1-8b39-b75a3e51c286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\PAS">
+      <UniqueIdentifier>{65c5cb52-6329-46fc-b99d-b32ac2fd09f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\2DDrawer">
+      <UniqueIdentifier>{d693bedc-7b02-44b4-9e20-b393a8b6d878}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\MenuManager">
+      <UniqueIdentifier>{2638ae2b-e0cc-48c1-94e9-2d571c94b389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\PAS">
+      <UniqueIdentifier>{53cf2d27-ac55-451d-b5b7-d3a706776d60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\directX">
+      <UniqueIdentifier>{75731989-50da-4d01-99d8-778fcaf7dedf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\DXTK">
+      <UniqueIdentifier>{56d27aa4-e8b2-4c12-ba69-1524537b3b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ErrorManager">
+      <UniqueIdentifier>{3eeaf185-2270-40d9-929c-f386981c2eff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\DXTK">
+      <UniqueIdentifier>{546b270b-7df9-46c0-bf3d-c281dfaf5af4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Shader">
+      <UniqueIdentifier>{5dedaab9-295f-4b11-87ce-b5da0c62a9e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Shader">
+      <UniqueIdentifier>{a7fd62ce-17a6-48be-b0e6-eae8f1fe6ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Shader\ShaderClass">
+      <UniqueIdentifier>{96537ddf-95be-4ff9-8d2a-cb4b3cfaad30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Shader\ShaderClass">
+      <UniqueIdentifier>{f04e5f46-3734-4fc2-ae1f-92fc2a0ad6b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\hlsl">
+      <UniqueIdentifier>{f04e2d11-99a3-4f4d-a317-f6960259826e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\hlsl\PAS">
+      <UniqueIdentifier>{b9b99fa1-28d9-4bd2-937b-3cba1898d84f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\hlsl\PAS\CS">
+      <UniqueIdentifier>{d1390c3a-c5db-4fac-801b-abd632a7e61b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\DirectXTex">
+      <UniqueIdentifier>{07c0131c-4aee-43e2-8e36-90beb6648b3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\base\_BaseObject.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\2DSQUARE.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\BaseManager.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\BillBoardBeamManager.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\CallbackProc.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\Camera.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\CameraController.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\CreateTexture.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\DataBox.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\DebugCommentManager.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\DefineRendering.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\FieldManager.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\FPSCounter.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\Input.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\LinerAdder.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\main.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\MatrixBox.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\RootManager.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\sFieldObject.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\SoundBox.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\TimeMeasurer.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\VirtualController.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\WindowsBase.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PAS\LogManager.cpp">
+      <Filter>ソース ファイル\PAS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PAS\PASComputeTexture.cpp">
+      <Filter>ソース ファイル\PAS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PAS\PASManager.cpp">
+      <Filter>ソース ファイル\PAS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\2DDrawer\2DDrawManager.cpp">
+      <Filter>ソース ファイル\2DDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ManuManager\MenuManager.cpp">
+      <Filter>ソース ファイル\MenuManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ManuManager\MenuManager_Parts.cpp">
+      <Filter>ソース ファイル\MenuManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ManuManager\MenuManagerBase.cpp">
+      <Filter>ソース ファイル\MenuManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ManuManager\MMParts_Draw.cpp">
+      <Filter>ソース ファイル\MenuManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ManuManager\MMParts_SlideBar.cpp">
+      <Filter>ソース ファイル\MenuManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\MyFunction.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ManuManager\MMParts_Func.cpp">
+      <Filter>ソース ファイル\MenuManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base\DirectX9Base.cpp">
+      <Filter>ソース ファイル\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dx11\DirectX11Base.cpp">
+      <Filter>ソース ファイル\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ErrorManager\ErrorManager.cpp">
+      <Filter>ソース ファイル\ErrorManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\ShaderBase.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\ShaderManager.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\ShaderClass\EffectDefault.cpp">
+      <Filter>ソース ファイル\Shader\ShaderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\ShaderClass\HDRToneMap.cpp">
+      <Filter>ソース ファイル\Shader\ShaderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\ShaderClass\NonLight.cpp">
+      <Filter>ソース ファイル\Shader\ShaderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\ShaderClass\ScaleDownMagic.cpp">
+      <Filter>ソース ファイル\Shader\ShaderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\ShaderBox.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\AlphaTestEffect.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\BasicEffect.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\BinaryReader.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\CommonStates.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\DDSTextureLoader.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\DualTextureEffect.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\EffectCommon.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\EnvironmentMapEffect.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\GamePad.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\GeometricPrimitive.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\Model.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\ModelLoadSDKMESH.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\ModelLoadVBO.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\pch.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\PrimitiveBatch.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\SimpleMath.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\SkinnedEffect.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\SpriteBatch.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\SpriteFont.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DirectXtool\Src\VertexTypes.cpp">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PAS\EarthViewController.cpp">
+      <Filter>ソース ファイル\PAS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PAS\PASRender.cpp">
+      <Filter>ソース ファイル\PAS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PAS\PasPlanetStruct.cpp">
+      <Filter>ソース ファイル\PAS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\DxTex\ScreenGrab\ScreenGrab.cpp">
+      <Filter>ソース ファイル\DirectXTex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\ShaderClass\BlurBloom.cpp">
+      <Filter>ソース ファイル\Shader\ShaderClass</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\base\_BaseObject.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\_BaseSystem.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\2DSQUARE.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\BaseManager.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\BillBoardBeamManager.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\Camera.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\CameraController.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\CheckPointObject.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\CreateTexture.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\DataBox.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\DebugCommentManager.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\define.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\DefineRendering.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\FieldManager.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\FPSCounter.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\IncludeAll.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\Input.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\LinerAdder.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\LoadFileNameList.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\MatrixBox.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\MyFunction.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\RootManager.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\sFieldObject.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\SmartPointer.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\SoundBox.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\SystemPointerBox.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\TimeMeasurer.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\VirtualController.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\WindowsBase.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\2DDrawer\2DDrawManager.h">
+      <Filter>ヘッダー ファイル\2DDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ManuManager\MenuManager.h">
+      <Filter>ヘッダー ファイル\MenuManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ManuManager\MenuManager_Parts.h">
+      <Filter>ヘッダー ファイル\MenuManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ManuManager\MenuManagerBase.h">
+      <Filter>ヘッダー ファイル\MenuManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ManuManager\MMParts_Draw.h">
+      <Filter>ヘッダー ファイル\MenuManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ManuManager\MMParts_SlideBar.h">
+      <Filter>ヘッダー ファイル\MenuManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\GameManagerComposite.h">
+      <Filter>ソース ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PAS\LogManager.h">
+      <Filter>ヘッダー ファイル\PAS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PAS\PASComputeTexture.h">
+      <Filter>ヘッダー ファイル\PAS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PAS\PASManager.h">
+      <Filter>ヘッダー ファイル\PAS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ManuManager\MMParts_Func.h">
+      <Filter>ヘッダー ファイル\MenuManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\DirectX9Base.h">
+      <Filter>ソース ファイル\directX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dx11\DirectX11Base.h">
+      <Filter>ソース ファイル\directX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\DefineDirectX.h">
+      <Filter>ソース ファイル\directX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ErrorManager\ErrorManager.h">
+      <Filter>ソース ファイル\ErrorManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\ShaderBase.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\ShaderManager.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\ShaderClass\EffectDefault.h">
+      <Filter>ヘッダー ファイル\Shader\ShaderClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\ShaderClass\HDRToneMap.h">
+      <Filter>ヘッダー ファイル\Shader\ShaderClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\ShaderClass\NonLight.h">
+      <Filter>ヘッダー ファイル\Shader\ShaderClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\ShaderClass\ScaleDownMagic.h">
+      <Filter>ヘッダー ファイル\Shader\ShaderClass</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\ShaderBox.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\AlignedNew.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\Bezier.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\BinaryReader.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\ConstantBuffer.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\dds.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\DemandCreate.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\EffectCommon.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\pch.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\PlatformHelpers.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\SharedResourcePool.h">
+      <Filter>ソース ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\Audio.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\CommonStates.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\DDSTextureLoader.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\DirectXHelpers.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\GamePad.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\GeometricPrimitive.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\Model.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\PrimitiveBatch.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\ScreenGrab.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\SimpleMath.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\SpriteBatch.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\SpriteFont.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\VertexTypes.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\WICTextureLoader.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DirectXtool\Inc\XboxDDSTextureLoader.h">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PAS\EarthViewController.h">
+      <Filter>ヘッダー ファイル\PAS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PAS\PASRender.h">
+      <Filter>ヘッダー ファイル\PAS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PAS\PASPlanetStruct.h">
+      <Filter>ヘッダー ファイル\PAS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\DxTex\ScreenGrab\ScreenGrab.h">
+      <Filter>ソース ファイル\DirectXTex</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\ShaderClass\BlurBloom.h">
+      <Filter>ヘッダー ファイル\Shader\ShaderClass</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\DirectXtool\Inc\SimpleMath.inl">
+      <Filter>ヘッダー ファイル\DXTK</Filter>
+    </None>
+    <None Include="src\hlsl\PAS_Common.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS</Filter>
+    </None>
+    <None Include="src\hlsl\CS_Blur.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="src\hlsl\PS_RefTex.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\VS_2DScreen.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PS_test.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\2DDrawer_PS_Circle.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\2DDrawer_PS_Donut.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\2DDrawer_VS.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PS_RefTex3D.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_PS.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_VS.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_CS0_tra.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_CS1_irr1.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_CS2_ins1.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_CS3_irrCpy.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_CS4_insCpy.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_CS5_CompJ.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_CS7_insN.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_CS6_irrN.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_CS9_insCpyN.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_PS1_PreRender.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_PS2_Ground.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_PS3_Atmosphere.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_PS4_Sun.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PS_ScaleDown.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\CS_Blur_X.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\CS_Blur_Y.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PS_Blur_X.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PS_Blur_Y.hlsl">
+      <Filter>ソース ファイル\hlsl</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
