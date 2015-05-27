@@ -404,7 +404,6 @@
     <ClInclude Include="src\dx11\DirectX11Base.h" />
     <ClInclude Include="src\ErrorManager\ErrorManager.h" />
     <None Include="..\..\..\..\..\..\DirectXtool\Inc\SimpleMath.inl" />
-    <None Include="src\hlsl\CS_Blur.hlsl" />
     <ClInclude Include="src\ManuManager\MenuManager.h" />
     <ClInclude Include="src\ManuManager\MenuManagerBase.h" />
     <ClInclude Include="src\ManuManager\MenuManager_Parts.h" />
@@ -452,6 +451,10 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release64|x64'">Vertex</ShaderType>
     </FxCompile>
     <None Include="src\hlsl\PAS_Common.hlsl">
+      <FileType>Document</FileType>
+    </None>
+    <FxCompile Include="src\hlsl\CS_Blur_Copy.hlsl" />
+    <None Include="src\hlsl\CS_Blur_h.hlsl">
       <FileType>Document</FileType>
     </None>
     <FxCompile Include="src\hlsl\CS_Blur_X.hlsl">

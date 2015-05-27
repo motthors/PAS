@@ -5,8 +5,8 @@
 
 DefineRendering::DefineRendering()
 {
-	WindowX			= 1280;//1280;	860
-	WindowY			= 720;//720;	540
+	WindowX			= 1280;//1280;	16
+	WindowY			= 720;//720;	9
 	RenderTargetX	= 1920;//1920;
 	RenderTargetY	= 1080;//1080;
 	RenderTargetNum	= 2;

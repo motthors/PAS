@@ -16,6 +16,7 @@ BlurBloom::~BlurBloom()
 
 	SAFE_DELETE(m_p2Dsq);
 
+	RELEASE(m_pCScpy);
 	RELEASE(m_pCSx);
 	RELEASE(m_pCSy);
 }
@@ -31,6 +32,7 @@ void BlurBloom::Init(ShaderBox* pSV, DXDEVICE* pdev, DXCONTEXT* pcnt)
 	//p2Dsq = new D3D2DSQUARE(pdev, Width * 4, Height * 4);
 	m_p2Dsq->Init();
 
+	m_pShaderBox->CreateComputeShader(&m_pCSx, _T("data/hlsl/CS_Blur_X.cso"));
 	m_pShaderBox->CreateComputeShader(&m_pCSx, _T("data/hlsl/CS_Blur_X.cso"));
 	m_pShaderBox->CreateComputeShader(&m_pCSy, _T("data/hlsl/CS_Blur_Y.cso"));
 
@@ -67,15 +69,15 @@ HRESULT BlurBloom::CreateSurface()
 	//if(FAILED(hr))
 	//	return hr;
 
-	float t_width = m_Width;
-	float t_height = m_Height;
+	UINT t_width = 16 * 3 * 3 * 3;
+	UINT t_height = 9 * 3 * 3 * 3;
 	FOR(BLUR_TEX_NUM)
 	{
-		t_width /= 4.f;
-		t_height /= 4.f;
 		m_pShaderBox->CreateTexture2D(&m_pBlurTex[i], nullptr, 0, t_width, t_height / 4, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
 		m_pShaderBox->CreateSRV(m_pBlurTex[i], &m_pBlurSRV[i], DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_SRV_DIMENSION_TEXTURE2D);
 		m_pShaderBox->CreateUAV(m_pBlurTex[i], &m_pBlurUAV[i], DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_UAV_DIMENSION_TEXTURE2D);
+		t_width /= 3;
+		t_height /= 3;
 	}
 
 	return S_OK;
@@ -98,7 +100,7 @@ void BlurBloom::SetConstStruct()
 }
 
 
-void BlurBloom::Render()
+void BlurBloom::Render(ID3D11RenderTargetView* pOutRTV)
 {
 	//pEffect->SetTechnique( "Main" );
 	//UINT i;
@@ -113,6 +115,12 @@ void BlurBloom::Render()
 	//
 	//p2Dsq->Resize(Width,Height);
 	//SetMatrixBlurX();
+	ID3D11UnorderedAccessView*	pNull = NULL;
+
+	m_pContext->CSSetShader(m_pCScpy, NULL, 0);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurUAV[0], NULL);
+	m_pContext->Dispatch(1*3*3*3, 1*3*3*3, 1);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
 
 	//// X•ûŒüƒuƒ‰[‚©‚¯
 	//pEffect->SetTexture("t0", pShaderM->pHDRBlurTex );
@@ -121,6 +129,11 @@ void BlurBloom::Render()
 	//pEffect->BeginPass(1);
 	//p2Dsq->Render();
 	//pEffect->EndPass();
+
+	m_pContext->CSSetShader(m_pCSx, NULL, 0);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurUAV[0], NULL);
+	m_pContext->Dispatch(1 * 3 * 3 * 3, 1 * 3 * 3 * 3, 1);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
 
 	//SetMatrixBlurY();
 

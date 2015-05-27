@@ -9,7 +9,7 @@ class BlurBloom : public ShaderBase{
 
 	D3D2DSQUARE *m_p2Dsq;
 
-	// 4分の1を3回行う
+	// 3分の1を3回行う
 	//ブラーレンダリング用ちっちゃいサーフェス
 #define BLUR_TEX_NUM 3
 	ID3D11Texture2D*			m_pBlurTex[3];
@@ -17,6 +17,7 @@ class BlurBloom : public ShaderBase{
 	ID3D11UnorderedAccessView*	m_pBlurUAV[3];
 
 	// CS Shader
+	ID3D11ComputeShader* m_pCScpy = nullptr;
 	ID3D11ComputeShader* m_pCSx = nullptr;
 	ID3D11ComputeShader* m_pCSy = nullptr;
 
@@ -37,7 +38,7 @@ public:
 	HRESULT CreateSurface();
 	void SetMatrixDiv();
 	void SetConstStruct();
-	void Render();
+	void Render(ID3D11RenderTargetView* pOutRTV);
 
 	void up();
 	void down();

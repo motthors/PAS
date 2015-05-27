@@ -433,6 +433,9 @@ void ShaderManager::ResetState()
 	m_pContext->PSSetSamplers(0, 2, m_pSamplerState);
 	m_pShaderBox->SetDepthFlag(0);
 	m_pShaderBox->SetDepthState(m_pShaderBox->No);
+	
+	// temp
+	m_pContext->CSSetSamplers(0, 1, &m_pSamplerState[0]);
 }
 
 //void ShaderManager::SetViewProj(mat4* V, mat4* P, vec* pCamPos)

@@ -70,6 +70,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\hlsl\Blur">
+      <UniqueIdentifier>{c045345a-a663-4a3d-a597-5bea5d11276f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\base\_BaseObject.cpp">
@@ -532,8 +535,8 @@
     <None Include="src\hlsl\PAS_Common.hlsl">
       <Filter>ソース ファイル\hlsl\PAS</Filter>
     </None>
-    <None Include="src\hlsl\CS_Blur.hlsl">
-      <Filter>ソース ファイル\hlsl</Filter>
+    <None Include="src\hlsl\CS_Blur_h.hlsl">
+      <Filter>ソース ファイル\hlsl\Blur</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -606,17 +609,20 @@
     <FxCompile Include="src\hlsl\PS_ScaleDown.hlsl">
       <Filter>ソース ファイル\hlsl</Filter>
     </FxCompile>
+    <FxCompile Include="src\hlsl\CS_Blur_Copy.hlsl">
+      <Filter>ソース ファイル\hlsl\Blur</Filter>
+    </FxCompile>
     <FxCompile Include="src\hlsl\CS_Blur_X.hlsl">
-      <Filter>ソース ファイル\hlsl</Filter>
+      <Filter>ソース ファイル\hlsl\Blur</Filter>
     </FxCompile>
     <FxCompile Include="src\hlsl\CS_Blur_Y.hlsl">
-      <Filter>ソース ファイル\hlsl</Filter>
+      <Filter>ソース ファイル\hlsl\Blur</Filter>
     </FxCompile>
     <FxCompile Include="src\hlsl\PS_Blur_X.hlsl">
-      <Filter>ソース ファイル\hlsl</Filter>
+      <Filter>ソース ファイル\hlsl\Blur</Filter>
     </FxCompile>
     <FxCompile Include="src\hlsl\PS_Blur_Y.hlsl">
-      <Filter>ソース ファイル\hlsl</Filter>
+      <Filter>ソース ファイル\hlsl\Blur</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
