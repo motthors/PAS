@@ -46,8 +46,9 @@ class ShaderManager{
 	ShaderBase*		aEffect[EFFECT_NUM];
 
 	// ポストエフェクトシェーダークラス 
-	ShaderBase*		pScaleDown;
 	ShaderBase*		pHDR;
+	ShaderBase*		pBlurBloom;
+	ShaderBase*		pScaleDown;
 
 	MatrixBox*		pMB;
 

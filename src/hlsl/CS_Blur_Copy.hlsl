@@ -11,5 +11,8 @@ void main(uint3 did : SV_DispatchThreadID)
 {
 	uint x = did.x;
 	uint y = did.y;
-	rwTexDest[int2(x, y)] = TexSrc.SampleLevel(Sampler,uint2(x, y),1);
+	uint u;
+	uint v;
+	rwTexDest.GetDimensions(u, v);
+	rwTexDest[int2(x, y)] = TexSrc.SampleLevel(Sampler, did.xy / float2(u,v), 0);
 }

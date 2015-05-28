@@ -10,14 +10,14 @@ float4 PS_Blur_Y(float2 texel)
 	float4 Out = 0;
 
 	//Out = tex2D(tex0,In.Tex);
-	Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel0)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel0))) * Weight0;
-	Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel1)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel1))) * Weight1;
-	Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel2)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel2))) * Weight2;
-	Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel3)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel3))) * Weight3;
-	Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel4)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel4))) * Weight4;
-	Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel5)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel5))) * Weight5;
-	Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel6)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel6))) * Weight6;
-	Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel7)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel7))) * Weight7;
+	//Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel0)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel0))) * Weight0;
+	//Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel1)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel1))) * Weight1;
+	//Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel2)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel2))) * Weight2;
+	//Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel3)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel3))) * Weight3;
+	//Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel4)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel4))) * Weight4;
+	//Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel5)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel5))) * Weight5;
+	//Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel6)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel6))) * Weight6;
+	//Out += (SrcTex.Sample(Sampler, texel + float2(0.0, g_Texel7)) + SrcTex.Sample(Sampler, texel - float2(0.0, g_Texel7))) * Weight7;
 	return Out;
 }
 

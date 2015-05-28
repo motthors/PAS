@@ -349,6 +349,8 @@ void PASRender::Render(ID3D11RenderTargetView* pOutRTV)
 	//m_p2Dsq->SetPixelShader(idPS_PAS);
 	//m_p2Dsq->Render();
 
+	m_pShaderBox->ChangeRenderTarget(0, nullptr);
+	m_pShaderBox->SetRTsToShader();
 	m_pContext->OMSetBlendState(m_pDefaultBlendState, Colors::Black, 0xffffffff);
 }
 

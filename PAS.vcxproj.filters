@@ -535,9 +535,6 @@
     <None Include="src\hlsl\PAS_Common.hlsl">
       <Filter>ソース ファイル\hlsl\PAS</Filter>
     </None>
-    <None Include="src\hlsl\CS_Blur_h.hlsl">
-      <Filter>ソース ファイル\hlsl\Blur</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\hlsl\PS_RefTex.hlsl">
@@ -622,6 +619,12 @@
       <Filter>ソース ファイル\hlsl\Blur</Filter>
     </FxCompile>
     <FxCompile Include="src\hlsl\PS_Blur_Y.hlsl">
+      <Filter>ソース ファイル\hlsl\Blur</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PS_Blur_Add.hlsl">
+      <Filter>ソース ファイル\hlsl\Blur</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\CS_Blur_h.hlsl">
       <Filter>ソース ファイル\hlsl\Blur</Filter>
     </FxCompile>
   </ItemGroup>

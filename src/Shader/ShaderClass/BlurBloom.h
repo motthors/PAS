@@ -16,6 +16,11 @@ class BlurBloom : public ShaderBase{
 	ID3D11ShaderResourceView*	m_pBlurSRV[3];
 	ID3D11UnorderedAccessView*	m_pBlurUAV[3];
 
+	// 作業用テクスチャバッファ　ブラー用テクスチャの最大サイズの正方形
+	ID3D11Texture2D*			m_pBlurWorkTex = nullptr;
+	ID3D11ShaderResourceView*	m_pBlurWorkSRV = nullptr;
+	ID3D11UnorderedAccessView*	m_pBlurWorkUAV = nullptr;
+
 	// CS Shader
 	ID3D11ComputeShader* m_pCScpy = nullptr;
 	ID3D11ComputeShader* m_pCSx = nullptr;
@@ -27,6 +32,7 @@ class BlurBloom : public ShaderBase{
 
 	// ブレンド重み　定数バッファ
 	float m_weight[8];
+	ID3D11Buffer* m_pConstBuffer = nullptr;
 
 	float m_Dispersion;
 
@@ -34,11 +40,10 @@ public:
 	BlurBloom();
 	~BlurBloom();
 	
-	void Init(ShaderBox* pSV, DXDEVICE* pdev, DXCONTEXT* pcnt);
+	void Init(DirectX11Base* pDx, ShaderBox* pSB, DXDEVICE* pdev, DXCONTEXT* pcnt);
 	HRESULT CreateSurface();
-	void SetMatrixDiv();
 	void SetConstStruct();
-	void Render(ID3D11RenderTargetView* pOutRTV);
+	void Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView* pInSRV);
 
 	void up();
 	void down();

@@ -4,6 +4,7 @@
 #include"ShaderClass/NonLight.h"
 
 #include"ShaderClass/HDRToneMap.h"
+#include"ShaderClass/BlurBloom.h"
 #include"ShaderClass/ScaleDownMagic.h"
 
 #include"../base/DefineRendering.h"
@@ -46,6 +47,7 @@ ShaderManager::~ShaderManager()
 {
 	SAFE_DELETE(pHDR);
 	SAFE_DELETE(pScaleDown);
+	SAFE_DELETE(pBlurBloom);
 	FOR(EFFECT_NUM)SAFE_DELETE(aEffect[i]);
 
 	RELEASE(pFixedSizeTex);
@@ -119,8 +121,12 @@ void ShaderManager::Init(DirectX11Base* pDx11, ShaderBox* pshader)
 	//	ErrM.SetHResult(0);
 	//	throw &ErrM;
 	//}
+	
+	// ブラーブルームシェーダークラス初期化
+	pBlurBloom = new BlurBloom;
+	pBlurBloom->Init(m_pDx11, pshader, m_pDevice, m_pContext);
 
-	//縮小マジックシェーダークラス初期化
+	// 縮小マジックシェーダークラス初期化
 	pScaleDown = new ScaleDownMagic;
 	pScaleDown->Init(m_pDx11, pshader, m_pDevice, m_pContext);
 
@@ -533,8 +539,20 @@ void ShaderManager::Draw()
 	//pBBBM->Draw();
 	//aEffect[0]->End();
 
+	m_pContext->OMSetBlendState(m_pCommonTextureBlendState, Colors::Black, 0xffffffff);
+
+	m_pShaderBox->ChangeRenderTarget(0, pFixedSizeRTV);
+	m_pShaderBox->SetRTsToShader();
+
+	p2DDrawer->Render();
+
+	m_pShaderBox->ChangeRenderTarget(0, nullptr);
+	m_pShaderBox->SetRTsToShader();
 
 	// HDR　ぼかしからの加算合成
+	if (pInput->GetKey(DIK_AT))((BlurBloom*)pBlurBloom)->up();
+	if (pInput->GetKey(DIK_COLON))((BlurBloom*)pBlurBloom)->down();
+	pBlurBloom->Render(pFixedSizeRTV, pFixedSizeSRV);
 	//pd3ddev->SetTexture(0, pFixedSizeTex );
 	//pd3ddev->SetRenderTarget( 1, NULL );
 	//pd3ddev->SetRenderTarget( 0, pHDRBlurSurface );
@@ -553,8 +571,9 @@ void ShaderManager::Draw()
 	pScaleDown->Render(m_pRenderTargetView, pFixedSizeSRV);
 
 
+
 	//2D描画
-	p2DDrawer->Render();
+	//p2DDrawer->Render();
 }
 
 
