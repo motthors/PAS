@@ -15,9 +15,9 @@ HDRToneMap::~HDRToneMap()
 	SAFE_DELETE(p2Dsq);
 }
 
-void HDRToneMap::Init(ShaderBox* pSV, DXDEVICE* pdev, DXCONTEXT* pcnt)
+void HDRToneMap::Init(ShaderBox* pSV, DebugTextureViewer* pDTV)
 {
-	ShaderBase::Init(NULL, pSV, pdev, pcnt);
+	ShaderBase::Init(NULL, pSV, pDTV);
 	Dispersion = 0.05f;
 	Width = (float)DefRender.RenderTargetX / 4;
 	Height = (float)DefRender.RenderTargetY / 4;

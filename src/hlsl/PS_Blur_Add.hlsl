@@ -25,10 +25,10 @@ struct PS_OUT
 PS_OUT main(PS_IN In)
 {
 	PS_OUT Out = (PS_OUT)0;
-	Out.MainCol = 
-		SrcTex1.Sample(Sampler, In.uv);
-		//+ SrcTex2.Sample(Sampler, In.uv) 
-		//+ SrcTex3.Sample(Sampler, In.uv);
+	Out.MainCol =
+		SrcTex1.Sample(Sampler, In.uv)*0.4
+		+SrcTex2.Sample(Sampler, In.uv)*0.2
+		+SrcTex2.Sample(Sampler, In.uv)*0.05;
 	return Out;
 }
 

@@ -2,7 +2,7 @@
 // Const Buffer
 cbuffer m_2DconstBuffer : register(b0)
 {
-	float Alpha : packoffset(c1);
+	float Alpha : packoffset(c0);
 };
 //////////////////////////////////////////////////////////////
 // texture

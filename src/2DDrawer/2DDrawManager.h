@@ -53,10 +53,10 @@ class My2DDrawManager {
 	} m2DDWConstVS;
 
 	typedef struct{
-		vec4 Width_Shift;
 		float alpha;
 		float XperY;
 		vec2 __Blank;
+		vec4 Width_Shift;
 	} m2DDWConstPS;
 
 	m2DDWConstVS m_ConstVS;

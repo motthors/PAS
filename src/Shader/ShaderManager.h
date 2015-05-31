@@ -16,6 +16,7 @@
 
 #include"ShaderBase.h"
 #include"ShaderBox.h"
+#include"DebugTextureViewer.h"
 
 #define EFFECT_NUM		2
 
@@ -42,6 +43,7 @@ class ShaderManager{
 	BillBoardBeamManager*	pBBBM;
 	PASComputeTexture*		pPASCT;
 	My2DDrawManager*		p2DDrawer;
+	DebugTextureViewer*		pDebugTex;
 
 	ShaderBase*		aEffect[EFFECT_NUM];
 
@@ -56,9 +58,11 @@ class ShaderManager{
 
 	// 共通ステート DXTK
 	ID3D11RasterizerState*		m_pCommonRasterizerState;
-	ID3D11BlendState*			m_pCommonTextureBlendState;
+	static const int m_BlendStateNum = 3;
+	ID3D11BlendState*			m_pCommonTextureBlendState[m_BlendStateNum];
 	ID3D11DepthStencilState*	m_pCommonDepthStencilState;
-	ID3D11SamplerState*			m_pSamplerState[2];
+	static const int m_SamplerStateNum = 2;
+	ID3D11SamplerState*			m_pSamplerState[m_SamplerStateNum];
 
 	void CreateCommonState();
 	void ResetState();
@@ -109,6 +113,7 @@ public:
 	void SetBBBManager(BillBoardBeamManager* p){ pBBBM = p; }
 	void SetPASCmpTex(PASComputeTexture* p){ pPASCT = p; }
 	void Set2DDrawer(My2DDrawManager* p){ p2DDrawer = p; }
+	void SetDebugTexture(DebugTextureViewer* p){ pDebugTex = p; }
 	void SetInputDevice(Input *p){pInput = p;}
 
 	//void SetViewProj(mat4* matView, mat4* matProj, vec3* pCamPos);

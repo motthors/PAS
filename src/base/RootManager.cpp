@@ -23,10 +23,12 @@ RootManager::RootManager()
 	pPASCT		= nullptr;
 	EndFlag			= true;
 	EnableDrawFlag	= false;
+	pDebugTextureViewer = nullptr;
 }	
 
 RootManager::~RootManager()
 {
+	SAFE_DELETE(pDebugTextureViewer);
 	SAFE_DELETE(pShaderBox);
 	SAFE_DELETE(pShaderM);
 	//SAFE_DELETE(pBBBM);
@@ -92,7 +94,7 @@ void RootManager::Run(HINSTANCE hinst, int nCmd)
 		//////////// Shader Group /////////////
 
 		pShaderBox = new ShaderBox;
-		pShaderBox->SetDevice(DxBase);
+		pShaderBox->Init(DxBase);
 
 		////pBBBM = new BillBoardBeamManager;
 		////pBBBM->Init(DxBase->GetpD3DDev(), pDataBox, pcam);
@@ -104,6 +106,9 @@ void RootManager::Run(HINSTANCE hinst, int nCmd)
 		p2DDrawer->SetShaderBox(pShaderBox);
 		p2DDrawer->Init(DxBase, pDataBox, DefRender.RenderTargetX, DefRender.RenderTargetY);
 
+		pDebugTextureViewer = new DebugTextureViewer;
+		pDebugTextureViewer->Init(DxBase, pShaderBox);
+
 		pShaderM = new ShaderManager;
 		pShaderM->SetDataBoxPointer( pDataBox );
 		pShaderM->SetInputDevice( pInput );
@@ -111,6 +116,7 @@ void RootManager::Run(HINSTANCE hinst, int nCmd)
 		////pShaderM->SetBBBManager(pBBBM);
 		pShaderM->SetPASCmpTex(pPASCT);
 		pShaderM->Set2DDrawer(p2DDrawer);
+		pShaderM->SetDebugTexture(pDebugTextureViewer);
 		pShaderM->Init(DxBase, pShaderBox);
 
 		//SoundBox *sp=NULL;//temp;

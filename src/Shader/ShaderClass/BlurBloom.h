@@ -40,7 +40,7 @@ public:
 	BlurBloom();
 	~BlurBloom();
 	
-	void Init(DirectX11Base* pDx, ShaderBox* pSB, DXDEVICE* pdev, DXCONTEXT* pcnt);
+	void Init(DirectX11Base* pDx, ShaderBox* pSB, DebugTextureViewer* pDTV);
 	HRESULT CreateSurface();
 	void SetConstStruct();
 	void Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView* pInSRV);

@@ -332,6 +332,7 @@
     <ClCompile Include="src\PAS\PASManager.cpp" />
     <ClCompile Include="src\PAS\PasPlanetStruct.cpp" />
     <ClCompile Include="src\PAS\PASRender.cpp" />
+    <ClCompile Include="src\Shader\DebugTextureViewer.cpp" />
     <ClCompile Include="src\Shader\ShaderBase.cpp" />
     <ClCompile Include="src\Shader\ShaderBox.cpp" />
     <ClCompile Include="src\Shader\ShaderClass\BlurBloom.cpp" />
@@ -368,6 +369,7 @@
     <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\PlatformHelpers.h" />
     <ClInclude Include="..\..\..\..\..\..\DirectXtool\Src\SharedResourcePool.h" />
     <ClInclude Include="..\..\..\..\..\..\DxTex\ScreenGrab\ScreenGrab.h" />
+    <ClInclude Include="DebugTextureViewer.h" />
     <ClInclude Include="src\2DDrawer\2DDrawManager.h" />
     <ClInclude Include="src\base\2DSQUARE.h" />
     <ClInclude Include="src\base\BaseManager.h" />
@@ -416,6 +418,7 @@
     <ClInclude Include="src\PAS\PASManager.h" />
     <ClInclude Include="src\PAS\PASPlanetStruct.h" />
     <ClInclude Include="src\PAS\PASRender.h" />
+    <ClInclude Include="src\Shader\DebugTextureViewer.h" />
     <ClInclude Include="src\Shader\ShaderBase.h" />
     <ClInclude Include="src\Shader\ShaderClass\BlurBloom.h" />
     <ClInclude Include="src\Shader\ShaderClass\EffectDefault.h" />

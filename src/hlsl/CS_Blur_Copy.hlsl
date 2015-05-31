@@ -9,10 +9,10 @@ RWTexture2D<float4> rwTexDest : register(u0);
 [numthreads(16, 9, 1)]
 void main(uint3 did : SV_DispatchThreadID)
 {
-	uint x = did.x;
-	uint y = did.y;
+	float x = did.x + 0.5;
+	float y = did.y + 0.5;
 	uint u;
 	uint v;
 	rwTexDest.GetDimensions(u, v);
-	rwTexDest[int2(x, y)] = TexSrc.SampleLevel(Sampler, did.xy / float2(u,v), 0);
+	rwTexDest[did.xy] = TexSrc.SampleLevel(Sampler, float2(x / u, y / v), 0);
 }

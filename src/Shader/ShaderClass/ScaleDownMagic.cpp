@@ -3,7 +3,6 @@
 
 ScaleDownMagic::ScaleDownMagic()
 {
-	strcpy_s(m_FileName,100,"data/Effect/2DPostEffect.fx");
 }
 
 ScaleDownMagic::~ScaleDownMagic()
@@ -11,9 +10,9 @@ ScaleDownMagic::~ScaleDownMagic()
 	SAFE_DELETE(m_p2Dsq);
 }
 
-void ScaleDownMagic::Init(DirectX11Base* pDx, ShaderBox* pSB, DXDEVICE* pdev, DXCONTEXT* pcnt)
+void ScaleDownMagic::Init(DirectX11Base* pDx, ShaderBox* pSB, DebugTextureViewer* pDTV)
 {
-	ShaderBase::Init(m_pDx11, pSB, pdev, pcnt);
+	ShaderBase::Init(pDx, pSB, pDTV);
 	m_p2Dsq = new D3D2DSQUARE(pDx, pSB, DefRender.WindowX, DefRender.WindowY);
 	m_p2Dsq->Init();
 	m_p2Dsq->SetPixelShader(m_pShaderBox->CreatePixelShader(_T("data/hlsl/PS_ScaleDown.cso")));

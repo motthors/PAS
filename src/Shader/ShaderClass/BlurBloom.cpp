@@ -27,9 +27,9 @@ BlurBloom::~BlurBloom()
 	RELEASE(m_pConstBuffer);
 }
 
-void BlurBloom::Init(DirectX11Base* pDx, ShaderBox* pSB, DXDEVICE* pdev, DXCONTEXT* pcnt)
+void BlurBloom::Init(DirectX11Base* pDx, ShaderBox* pSB, DebugTextureViewer* pDTV)
 {
-	ShaderBase::Init(pDx, pSB, pdev, pcnt);
+	ShaderBase::Init(pDx, pSB, pDTV);
 	m_Dispersion = 0.05f;
 	m_Width = (float)DefRender.RenderTargetX;
 	m_Height = (float)DefRender.RenderTargetY;
@@ -82,7 +82,7 @@ HRESULT BlurBloom::CreateSurface()
 
 	UINT t_width = 16 * 3 * 3 * 3;
 	UINT t_height = 9 * 3 * 3 * 3;
-	m_pShaderBox->CreateTexture2D(&m_pBlurWorkTex, nullptr, 0, t_width, t_height, DXGI_FORMAT_R16G16B16A16_FLOAT, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
+	m_pShaderBox->CreateTexture2D(&m_pBlurWorkTex, nullptr, 0, t_width, t_width, DXGI_FORMAT_R16G16B16A16_FLOAT, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
 	m_pShaderBox->CreateSRV(m_pBlurWorkTex, &m_pBlurWorkSRV, DXGI_FORMAT_R16G16B16A16_FLOAT, D3D11_SRV_DIMENSION_TEXTURE2D);
 	m_pShaderBox->CreateUAV(m_pBlurWorkTex, &m_pBlurWorkUAV, DXGI_FORMAT_R16G16B16A16_FLOAT, D3D11_UAV_DIMENSION_TEXTURE2D);
 	FOR(BLUR_TEX_NUM)
@@ -119,6 +119,7 @@ void BlurBloom::SetConstStruct()
 void BlurBloom::Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView* pInSRV)
 {
 	SetConstStruct();
+	ID3D11UnorderedAccessView*	pNull = NULL;
 
 	//pEffect->SetTechnique( "Main" );
 	//UINT i;
@@ -133,12 +134,27 @@ void BlurBloom::Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView
 	//
 	//p2Dsq->Resize(Width,Height);
 	//SetMatrixBlurX();
-	ID3D11UnorderedAccessView*	pNull = NULL;
 
+
+	// copy  Src -> 1
 	m_pContext->CSSetShaderResources(0, 1, &pInSRV);
 	m_pContext->CSSetShader(m_pCScpy, NULL, 0);
 	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurUAV[0], NULL);
 	m_pContext->Dispatch(1*3*3*3, 1*3*3*3, 1);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
+
+	// copy  1 -> 2
+	m_pContext->CSSetShaderResources(0, 1, &m_pBlurSRV[0]);
+	m_pContext->CSSetShader(m_pCScpy, NULL, 0);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurUAV[1], NULL);
+	m_pContext->Dispatch(1 * 3 * 3 * 3, 1 * 3 * 3 * 3, 1);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
+
+	// copy  2 -> 3
+	m_pContext->CSSetShaderResources(0, 1, &m_pBlurSRV[1]);
+	m_pContext->CSSetShader(m_pCScpy, NULL, 0);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurUAV[2], NULL);
+	m_pContext->Dispatch(1 * 3 * 3 * 3, 1 * 3 * 3 * 3, 1);
 	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
 
 	//// X•ûŒüƒuƒ‰[‚©‚¯
@@ -149,10 +165,46 @@ void BlurBloom::Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView
 	//p2Dsq->Render();
 	//pEffect->EndPass();
 
+	// Xaxis Blur 1
 	m_pContext->CSSetShaderResources(0, 1, &m_pBlurSRV[0]);
 	m_pContext->CSSetShader(m_pCSx, NULL, 0);
 	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurWorkUAV, NULL);
-	m_pContext->Dispatch(16*3*3*3, 9*3*3*3, 1);
+	m_pContext->Dispatch(16 * 3 * 3 * 3, 9 * 3 * 3 * 3, 1);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
+
+	// Yaxis Blur 1
+	m_pContext->CSSetShaderResources(0, 1, &m_pBlurWorkSRV);
+	m_pContext->CSSetShader(m_pCSx, NULL, 0);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurUAV[0], NULL);
+	m_pContext->Dispatch(9 * 3 * 3 * 3, 16 * 3 * 3 * 3, 1);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
+
+	// Xaxis Blur 2
+	m_pContext->CSSetShaderResources(0, 1, &m_pBlurSRV[1]);
+	m_pContext->CSSetShader(m_pCSx, NULL, 0);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurWorkUAV, NULL);
+	m_pContext->Dispatch(16 * 3 * 3, 9 * 3 * 3, 1);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
+
+	// Yaxis Blur 2
+	m_pContext->CSSetShaderResources(0, 1, &m_pBlurWorkSRV);
+	m_pContext->CSSetShader(m_pCSx, NULL, 0);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurUAV[1], NULL);
+	m_pContext->Dispatch(9 * 3 * 3, 16 * 3 * 3, 1);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
+
+	// Xaxis Blur 3
+	m_pContext->CSSetShaderResources(0, 1, &m_pBlurSRV[2]);
+	m_pContext->CSSetShader(m_pCSx, NULL, 0);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurWorkUAV, NULL);
+	m_pContext->Dispatch(16 * 3, 9 * 3, 1);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
+
+	// Yaxis Blur 3
+	m_pContext->CSSetShaderResources(0, 1, &m_pBlurWorkSRV);
+	m_pContext->CSSetShader(m_pCSx, NULL, 0);
+	m_pContext->CSSetUnorderedAccessViews(0, 1, &m_pBlurUAV[2], NULL);
+	m_pContext->Dispatch(9 * 3, 16 * 3, 1);
 	m_pContext->CSSetUnorderedAccessViews(0, 1, &pNull, (UINT*)&pNull);
 
 	//SetMatrixBlurY();
@@ -176,12 +228,13 @@ void BlurBloom::Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView
 	//p2Dsq->Render();
 	//pEffect->EndPass();
 	
-	//m_pContext->PSSetShaderResources(0, 3, m_pBlurSRV);
-	m_pContext->PSSetShaderResources(0, 1, &m_pBlurWorkSRV);
+	m_pContext->PSSetShaderResources(0, 3, m_pBlurSRV);
+	//m_pContext->PSSetShaderResources(0, 1, &m_pBlurWorkSRV);
 	m_pShaderBox->ChangeRenderTarget(0, pOutRTV);
 	m_pShaderBox->SetRTsToShader();
 	m_p2Dsq->Render();
 
+	FOR(BLUR_TEX_NUM)m_pDebugTex->Set(m_pBlurSRV[i]);
 	//pEffect->End();
 }
 

@@ -11,12 +11,13 @@ ShaderBase::~ShaderBase()
 }
 
 
-void ShaderBase::Init(DirectX11Base* pDx, ShaderBox* pSV, DXDEVICE* pdev, DXCONTEXT* pcnt)
+void ShaderBase::Init(DirectX11Base* pDx, ShaderBox* pSV, DebugTextureViewer* pDTV)
 {
 	m_pDx11 = pDx;
 	m_pShaderBox = pSV;
-	m_pDevice = pdev;
-	m_pContext = pcnt;
+	m_pDebugTex = pDTV;
+	m_pDevice = pDx->GetDevice();
+	m_pContext = pDx->GetContext();
 	////LPD3DXBUFFER ErrorText;
 
 	///*HRESULT hr = D3DXCreateEffectFromFileA(

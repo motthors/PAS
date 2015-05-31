@@ -25,7 +25,7 @@ public:
 	HDRToneMap();
 	~HDRToneMap();
 	
-	void Init(ShaderBox* pSV, DXDEVICE* pdev, DXCONTEXT* pcnt);
+	void Init(ShaderBox* pSV, DebugTextureViewer* pDTV);
 	HRESULT CreateSurface();
 	void SetMatrixDiv();
 	void SetMatrixBlurX();

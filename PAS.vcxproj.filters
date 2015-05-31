@@ -282,6 +282,9 @@
     <ClCompile Include="src\Shader\ShaderClass\BlurBloom.cpp">
       <Filter>ソース ファイル\Shader\ShaderClass</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shader\DebugTextureViewer.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\base\_BaseObject.h">
@@ -526,6 +529,12 @@
     </ClInclude>
     <ClInclude Include="src\Shader\ShaderClass\BlurBloom.h">
       <Filter>ヘッダー ファイル\Shader\ShaderClass</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugTextureViewer.h">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\DebugTextureViewer.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

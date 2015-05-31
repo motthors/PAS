@@ -20,8 +20,8 @@ typedef struct{
 
 class ShaderBox{
 	//DIrectX
-	DXDEVICE* m_pDevice;
-	DXCONTEXT* m_pContext;
+	DXDEVICE*		m_pDevice;
+	DXCONTEXT*		m_pContext;
 	// シェーダ配列
 	std::vector<VertexShaderStruct*>	VertexShaderBox;
 	std::vector<PixelShaderStruct*>		PixelShaderBox;
@@ -62,7 +62,7 @@ public:
 
 	ShaderBox();
 	~ShaderBox();
-	void SetDevice(DirectX11Base* p);
+	void Init(DirectX11Base* pdx11);
 
 	// シェーダー作成
 	UINT CreateVertexShader(TCHAR* csoName);

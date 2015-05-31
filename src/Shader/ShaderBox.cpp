@@ -34,10 +34,10 @@ ShaderBox::~ShaderBox()
 }
 
 
-void ShaderBox::SetDevice(DirectX11Base* p)
+void ShaderBox::Init(DirectX11Base* pdx11)
 {
-	m_pDevice = p->GetDevice();
-	m_pContext = p->GetContext();
+	m_pDevice = pdx11->GetDevice();
+	m_pContext = pdx11->GetContext();
 }
 
 

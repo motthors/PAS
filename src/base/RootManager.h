@@ -6,14 +6,15 @@
 #include"DirectX9Base.h"
 #include"../dx11/DirectX11Base.h"
 
-#include"../Shader/ShaderManager.h"
 #include"MatrixBox.h"
 #include"BillBoardBeamManager.h"
+#include"DebugCommentManager.h"
+#include"../2DDrawer/2DDrawManager.h"
 #include"../PAS/LogManager.h"
 #include"../PAS/PASComputeTexture.h"
 #include"../Shader/ShaderBox.h"
-#include"../2DDrawer/2DDrawManager.h"
-#include"DebugCommentManager.h"
+#include"../Shader/ShaderManager.h"
+#include"../Shader/DebugTextureViewer.h"
 
 #include"BaseManager.h"
 #include"FPSCounter.h"
@@ -45,6 +46,7 @@ class RootManager{
 	ShaderManager		*pShaderM;
 	//BillBoardBeamManager *pBBBM;
 	My2DDrawManager		*p2DDrawer;
+	DebugTextureViewer	*pDebugTextureViewer;
 
 	Input				*pInput;
 	VCon				*pVCon;

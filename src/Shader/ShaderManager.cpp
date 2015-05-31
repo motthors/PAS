@@ -20,6 +20,7 @@ ShaderManager::ShaderManager()
 	pMatBoxM	= nullptr;
 	pMB			= nullptr;
 	pBBBM		= nullptr;
+	pDebugTex	= nullptr;
 
 	pHDR		= nullptr;
 	pScaleDown	= nullptr;
@@ -38,9 +39,9 @@ ShaderManager::ShaderManager()
 	m_pDepthStencilView = 0;
 
 	m_pCommonRasterizerState = 0;
-	m_pCommonTextureBlendState = 0;
+	FOR(m_BlendStateNum)m_pCommonTextureBlendState[i] = 0;
 	m_pCommonDepthStencilState = 0;
-	FOR(2)m_pSamplerState[i] = 0;
+	FOR(m_SamplerStateNum)m_pSamplerState[i] = 0;
 }
 
 ShaderManager::~ShaderManager()
@@ -59,9 +60,9 @@ ShaderManager::~ShaderManager()
 	RELEASE(m_pRenderTargetView);
 
 	RELEASE(m_pCommonRasterizerState);
-	RELEASE(m_pCommonTextureBlendState);
+	FOR(m_BlendStateNum)RELEASE(m_pCommonTextureBlendState[i]);
 	RELEASE(m_pCommonDepthStencilState);
-	FOR(2)RELEASE(m_pSamplerState[i]);
+	FOR(m_SamplerStateNum)RELEASE(m_pSamplerState[i]);
 
 	RELEASE(m_pMyDepthTexture);
 	RELEASE(m_pMyDepthRTView);
@@ -97,7 +98,7 @@ void ShaderManager::Init(DirectX11Base* pDx11, ShaderBox* pshader)
 	CreateCommonState();
 
 	pPASCT->SetSampler(m_pSamplerState[0]);
-	pPASCT->CreateBlendState(m_pCommonTextureBlendState);
+	pPASCT->CreateBlendState(m_pCommonTextureBlendState[0]);
 	int idx=0;
 
 	m_pShaderBox->SetDepthstencil(m_pDepthStencilView);
@@ -124,11 +125,11 @@ void ShaderManager::Init(DirectX11Base* pDx11, ShaderBox* pshader)
 	
 	// ブラーブルームシェーダークラス初期化
 	pBlurBloom = new BlurBloom;
-	pBlurBloom->Init(m_pDx11, pshader, m_pDevice, m_pContext);
+	pBlurBloom->Init(m_pDx11, pshader, pDebugTex);
 
 	// 縮小マジックシェーダークラス初期化
 	pScaleDown = new ScaleDownMagic;
-	pScaleDown->Init(m_pDx11, pshader, m_pDevice, m_pContext);
+	pScaleDown->Init(m_pDx11, pshader, pDebugTex);
 
 	//pHDR = new HDRToneMap;
 	//pHDR->Init(this,pdev);
@@ -341,28 +342,52 @@ void ShaderManager::CreateCommonState()
 
 	/////////////////////////////////////////////////////
 	// ブレンドステート
-	D3D11_BLEND_DESC BlendDesc;
+	D3D11_BLEND_DESC BlendDesc[m_BlendStateNum];
 	ZeroMemory(&BlendDesc, sizeof(BlendDesc));
-	BlendDesc.AlphaToCoverageEnable = FALSE;
-	BlendDesc.IndependentBlendEnable = FALSE;
-	BlendDesc.RenderTarget[0].BlendEnable = TRUE;
-	BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-	BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	BlendDesc[0].AlphaToCoverageEnable = FALSE;
+	BlendDesc[0].IndependentBlendEnable = FALSE;
+	BlendDesc[0].RenderTarget[0].BlendEnable = TRUE;
+	BlendDesc[0].RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	BlendDesc[0].RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	BlendDesc[0].RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	BlendDesc[0].RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendDesc[0].RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc[0].RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendDesc[0].RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	
+	BlendDesc[1].AlphaToCoverageEnable = FALSE;
+	BlendDesc[1].IndependentBlendEnable = FALSE;
+	BlendDesc[1].RenderTarget[0].BlendEnable = TRUE;
+	BlendDesc[1].RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	BlendDesc[1].RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+	BlendDesc[1].RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	BlendDesc[1].RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendDesc[1].RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc[1].RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendDesc[1].RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	hr = m_pDevice->CreateBlendState(&BlendDesc, &m_pCommonTextureBlendState);
-	if (FAILED(hr))
+	BlendDesc[2].AlphaToCoverageEnable = FALSE;
+	BlendDesc[2].IndependentBlendEnable = FALSE;
+	BlendDesc[2].RenderTarget[0].BlendEnable = TRUE;
+	BlendDesc[2].RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	BlendDesc[2].RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
+	BlendDesc[2].RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	BlendDesc[2].RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendDesc[2].RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc[2].RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendDesc[2].RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	FOR(m_SamplerStateNum)
 	{
-		ErrM.SetClassName(_T("ShaderManager::CreateCommonState::CreateBlendState"));
-		ErrM.SetErrorText(_T("ブレンドステート作成に失敗"));
-		ErrM.SetHResult(hr);
-		throw &ErrM;
+		hr = m_pDevice->CreateBlendState(&BlendDesc[i], &m_pCommonTextureBlendState[i]);
+		if (FAILED(hr))
+		{
+			ErrM.SetClassName(_T("ShaderManager::CreateCommonState::CreateBlendState"));
+			ErrM.SetErrorText(_T("ブレンドステート作成に失敗"));
+			ErrM.SetHResult(hr);
+			throw &ErrM;
+		}
 	}
-
 	/////////////////////////////////////////////////////
 	// ラスタライザステート
 	D3D11_RASTERIZER_DESC rsDesc;
@@ -399,7 +424,7 @@ void ShaderManager::CreateCommonState()
 
 	/////////////////////////////////////////////////////
 	// サンプラステート
-	D3D11_SAMPLER_DESC samDesc[2];
+	D3D11_SAMPLER_DESC samDesc[m_SamplerStateNum];
 	ZeroMemory(&samDesc, sizeof(samDesc));
 	samDesc[0].Filter = D3D11_FILTER_ANISOTROPIC;
 	samDesc[0].AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
@@ -415,7 +440,8 @@ void ShaderManager::CreateCommonState()
 	samDesc[1].MaxAnisotropy = 1;
 	samDesc[1].ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 	samDesc[1].MaxLOD = D3D11_FLOAT32_MAX;
-	FOR(2)
+
+	FOR(m_SamplerStateNum)
 	{
 		hr = m_pDevice->CreateSamplerState(&samDesc[i], &m_pSamplerState[i]);
 		if (FAILED(hr))
@@ -433,7 +459,7 @@ void ShaderManager::CreateCommonState()
 void ShaderManager::ResetState()
 {
 	// Set State
-	m_pContext->OMSetBlendState(m_pCommonTextureBlendState, Colors::Black, 0xffffffff);
+	m_pContext->OMSetBlendState(m_pCommonTextureBlendState[0], Colors::Black, 0xffffffff);
 	//m_pContext->OMSetDepthStencilState(m_pCommonDepthStencilState, 0);
 	m_pContext->RSSetState(m_pCommonRasterizerState);
 	m_pContext->PSSetSamplers(0, 2, m_pSamplerState);
@@ -539,15 +565,7 @@ void ShaderManager::Draw()
 	//pBBBM->Draw();
 	//aEffect[0]->End();
 
-	m_pContext->OMSetBlendState(m_pCommonTextureBlendState, Colors::Black, 0xffffffff);
-
-	m_pShaderBox->ChangeRenderTarget(0, pFixedSizeRTV);
-	m_pShaderBox->SetRTsToShader();
-
-	p2DDrawer->Render();
-
-	m_pShaderBox->ChangeRenderTarget(0, nullptr);
-	m_pShaderBox->SetRTsToShader();
+	m_pContext->OMSetBlendState(m_pCommonTextureBlendState[1], Colors::Black, 0xffffffff);
 
 	// HDR　ぼかしからの加算合成
 	if (pInput->GetKey(DIK_AT))((BlurBloom*)pBlurBloom)->up();
@@ -559,6 +577,7 @@ void ShaderManager::Draw()
 	//pHDR->Render();
 	//pScaleDown->Render();
 
+	m_pContext->OMSetBlendState(m_pCommonTextureBlendState[0], Colors::Black, 0xffffffff);
 
 	m_pShaderBox->SetDepthFlag(0);
 
@@ -570,10 +589,13 @@ void ShaderManager::Draw()
 	//pd3ddev->SetTexture(0, pFixedSizeTex );
 	pScaleDown->Render(m_pRenderTargetView, pFixedSizeSRV);
 
-
-
 	//2D描画
-	//p2DDrawer->Render();
+	p2DDrawer->Render();
+
+	// debug Texture View
+	m_pContext->OMSetBlendState(m_pCommonTextureBlendState[2], Colors::Black, 0xffffffff);
+	if (pInput->GetKeyNow(DIK_SLASH)) pDebugTex->TurnOnOff();
+	pDebugTex->Render();
 }
 
 

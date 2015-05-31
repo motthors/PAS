@@ -4,9 +4,9 @@
 
 cbuffer m_2DconstBuffer : register(b0)
 {
-	float4 Width_Shift	: packoffset(c0);
-	float Alpha			: packoffset(c1);
-	float XperY			: packoffset(c1.y);
+	float Alpha			: packoffset(c0);
+	float XperY			: packoffset(c0.y);
+	float4 Width_Shift	: packoffset(c1);
 };
 
 //////////////////////////////////////////////////////////////
