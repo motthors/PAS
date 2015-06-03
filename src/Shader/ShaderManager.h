@@ -74,10 +74,6 @@ public:
 	//IDirect3DSurface9 *pFixedSizeSurface;
 	//IDirect3DSurface9 *pFixedSizeDepthStencil;
 	//IDirect3DSurface9 *pHDRBlurSurface;
-	// 固定サイズHDRターゲット
-	ID3D11Texture2D*			pFixedSizeTex = nullptr;
-	ID3D11RenderTargetView*		pFixedSizeRTV = nullptr;
-	ID3D11ShaderResourceView*	pFixedSizeSRV = nullptr;
 
 	//ID3D11Texture2D *pHDRBlurTex;
 	//ID3D11UnorderedAccessView* pHDRBlurUAV;
@@ -86,14 +82,8 @@ public:
 	ID3D11RenderTargetView*	m_pRenderTargetView;	// 最終描画ターゲット
 	ID3D11Texture2D*		m_pDepthStencil;
 	ID3D11DepthStencilView*	m_pDepthStencilView;
-	
-	// 自前Zバッファ
-	ID3D11Texture2D*			m_pMyDepthTexture = nullptr;
-	ID3D11RenderTargetView*		m_pMyDepthRTView = nullptr;
-	ID3D11ShaderResourceView*	m_pMyDepthSRView = nullptr;
 
 private:
-	void CreateSurface();
 	void CreateTexture(ID3D11Texture2D** pTex, UINT x, UINT y, DXGI_FORMAT Format);
 	void CreateSRV(ID3D11Texture2D* pTex, ID3D11ShaderResourceView** pView, DXGI_FORMAT Format);		// シェーダから読み込む専用View
 	void CreateRTV(ID3D11Texture2D* pTex, ID3D11RenderTargetView** pView, DXGI_FORMAT Format);		// 書き込みのためのView

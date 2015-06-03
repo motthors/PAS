@@ -51,10 +51,6 @@ ShaderManager::~ShaderManager()
 	SAFE_DELETE(pBlurBloom);
 	FOR(EFFECT_NUM)SAFE_DELETE(aEffect[i]);
 
-	RELEASE(pFixedSizeTex);
-	RELEASE(pFixedSizeRTV);
-	RELEASE(pFixedSizeSRV);
-
 	RELEASE(m_pDepthStencilView);
 	RELEASE(m_pDepthStencil);
 	RELEASE(m_pRenderTargetView);
@@ -63,10 +59,6 @@ ShaderManager::~ShaderManager()
 	FOR(m_BlendStateNum)RELEASE(m_pCommonTextureBlendState[i]);
 	RELEASE(m_pCommonDepthStencilState);
 	FOR(m_SamplerStateNum)RELEASE(m_pSamplerState[i]);
-
-	RELEASE(m_pMyDepthTexture);
-	RELEASE(m_pMyDepthRTView);
-	RELEASE(m_pMyDepthSRView);
 }
 
 
@@ -94,7 +86,13 @@ void ShaderManager::Init(DirectX11Base* pDx11, ShaderBox* pshader)
 	m_vp.TopLeftY = 0;
 	m_pContext->RSSetViewports(1, &m_vp);
 
-	CreateSurface();
+	// 共用ステンシルZバッファ作成
+	CreateDepthStencil();
+
+	// 最終描画ターゲット作成
+	CreateRenderTarget();
+	m_pShaderBox->FinalRTV = m_pRenderTargetView;
+
 	CreateCommonState();
 
 	pPASCT->SetSampler(m_pSamplerState[0]);
@@ -135,42 +133,6 @@ void ShaderManager::Init(DirectX11Base* pDx11, ShaderBox* pshader)
 	//pHDR->Init(this,pdev);
 }
 
-void ShaderManager::CreateSurface()
-{
-	// 固定サイズサーフェス(HDR)作成
-	m_pShaderBox->CreateTexture2D(	&pFixedSizeTex,
-					nullptr, 0,
-					DefRender.RenderTargetX, DefRender.RenderTargetY, 
-					DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-
-	m_pShaderBox->CreateRTV(pFixedSizeTex, &pFixedSizeRTV, 
-				DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_RTV_DIMENSION_TEXTURE2D);
-
-	m_pShaderBox->CreateSRV(pFixedSizeTex, &pFixedSizeSRV,
-		DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_SRV_DIMENSION_TEXTURE2D);
-
-
-
-	//// HDR用サーフェス作成
-	//CreateTexture(	&pHDRBlurTex,
-	//				DefRender.RenderTargetX,
-	//				DefRender.RenderTargetY,
-	//				DXGI_FORMAT_R8G8B8A8_UINT);
-	//CreateUAV(	pHDRBlurTex,
-	//			&pHDRBlurUAV,
-	//			DXGI_FORMAT_R8G8B8A8_UINT);
-
-
-	// 共用ステンシルZバッファ作成
-	CreateDepthStencil();
-
-	// 最終描画ターゲット作成
-	CreateRenderTarget();
-
-	// レンダリングターゲットを設定する
-	//m_pContext->OMSetRenderTargets(1, &m_pRenderTargetView, NULL);
-
-}
 
 void ShaderManager::CreateTexture(ID3D11Texture2D** pTex, UINT x, UINT y, DXGI_FORMAT Format)
 {
@@ -311,28 +273,6 @@ void ShaderManager::CreateDepthStencil()
 		ErrM.SetHResult(hr);
 		throw &ErrM;
 	}
-
-	// 自前Zバッファテクスチャ作成
-	m_pShaderBox->CreateTexture2D(
-		&m_pMyDepthTexture,
-		nullptr, 0,
-		DefRender.RenderTargetX,
-		DefRender.RenderTargetY,
-		DXGI_FORMAT_R32G32B32A32_FLOAT,
-		D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
-		);
-	m_pShaderBox->CreateRTV(
-		m_pMyDepthTexture,
-		&m_pMyDepthRTView,
-		DXGI_FORMAT_R32G32B32A32_FLOAT,
-		D3D11_RTV_DIMENSION_TEXTURE2D
-		);
-	m_pShaderBox->CreateSRV(
-		m_pMyDepthTexture,
-		&m_pMyDepthSRView,
-		DXGI_FORMAT_R32G32B32A32_FLOAT,
-		D3D11_SRV_DIMENSION_TEXTURE2D
-		);
 }
 
 
@@ -463,6 +403,7 @@ void ShaderManager::ResetState()
 	//m_pContext->OMSetDepthStencilState(m_pCommonDepthStencilState, 0);
 	m_pContext->RSSetState(m_pCommonRasterizerState);
 	m_pContext->PSSetSamplers(0, 2, m_pSamplerState);
+	m_pContext->CSSetSamplers(0, 2, m_pSamplerState);
 	m_pShaderBox->SetDepthFlag(0);
 	m_pShaderBox->SetDepthState(m_pShaderBox->No);
 	
@@ -528,8 +469,10 @@ void ShaderManager::Draw()
 	m_pContext->RSSetViewports(1, &m_vp);
 
 
-	m_pShaderBox->ChangeRenderTarget(0, pFixedSizeRTV);
-	m_pShaderBox->ChangeRenderTarget(1, m_pMyDepthRTView);
+	//m_pShaderBox->ChangeRenderTarget(0, pFixedSizeRTV);
+	//m_pShaderBox->ChangeRenderTarget(1, m_pMyDepthRTView);
+	m_pShaderBox->ChangeRenderTarget(0, (UINT)0);
+	m_pShaderBox->ChangeRenderTarget(0, 1);
 	m_pShaderBox->SetRTsToShader();
 
 	//pd3ddev->SetRenderTarget( 0, pFixedSizeSurface );	
@@ -554,7 +497,7 @@ void ShaderManager::Draw()
 
 
 	//大気散乱シミュ描画　PAS  
-	pPASCT->Render(pFixedSizeRTV);
+	pPASCT->Render();
 
 	// BBB描画
 	//pBBBM->MeshSet();
@@ -565,12 +508,12 @@ void ShaderManager::Draw()
 	//pBBBM->Draw();
 	//aEffect[0]->End();
 
-	m_pContext->OMSetBlendState(m_pCommonTextureBlendState[1], Colors::Black, 0xffffffff);
+	//m_pContext->OMSetBlendState(m_pCommonTextureBlendState[1], Colors::Black, 0xffffffff);
 
-	// HDR　ぼかしからの加算合成
+	// ToneMap + BlurBloom
 	if (pInput->GetKey(DIK_AT))((BlurBloom*)pBlurBloom)->up();
 	if (pInput->GetKey(DIK_COLON))((BlurBloom*)pBlurBloom)->down();
-	pBlurBloom->Render(pFixedSizeRTV, pFixedSizeSRV);
+	pBlurBloom->Render();
 	//pd3ddev->SetTexture(0, pFixedSizeTex );
 	//pd3ddev->SetRenderTarget( 1, NULL );
 	//pd3ddev->SetRenderTarget( 0, pHDRBlurSurface );
@@ -587,7 +530,7 @@ void ShaderManager::Draw()
 	m_pContext->RSSetViewports(1, &m_vp);
 	//pd3ddev->SetTexture(0, pHDRBlurTex );
 	//pd3ddev->SetTexture(0, pFixedSizeTex );
-	pScaleDown->Render(m_pRenderTargetView, pFixedSizeSRV);
+	pScaleDown->Render();
 
 	//2D描画
 	p2DDrawer->Render();
@@ -604,8 +547,9 @@ void ShaderManager::BeginDraw()
 	// Clear the back buffer
 	float	clearColor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	m_pContext->ClearRenderTargetView(m_pRenderTargetView, clearColor);
-	m_pContext->ClearRenderTargetView(pFixedSizeRTV, clearColor);
-	m_pContext->ClearRenderTargetView(m_pMyDepthRTView, Colors::White);
+	m_pContext->ClearRenderTargetView(m_pShaderBox->pum_pRTVF32[0], clearColor);
+	m_pContext->ClearRenderTargetView(m_pShaderBox->pum_pRTVF32[1], Colors::White);
+	m_pContext->ClearRenderTargetView(m_pShaderBox->pum_pRTVF32[3], Colors::White);
 	
 	// Clear the depth buffer to 1.0 (max depth)
 	m_pContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);

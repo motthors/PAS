@@ -15,7 +15,7 @@ public:
 
 	void Init(DirectX11Base* pDx, ShaderBox* pSB, DebugTextureViewer* pDTV);
 	void SetMatrix(){}
-	void Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView* pInSRV);
+	void Render();
 };
 
 #endif

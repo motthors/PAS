@@ -18,16 +18,16 @@ void ScaleDownMagic::Init(DirectX11Base* pDx, ShaderBox* pSB, DebugTextureViewer
 	m_p2Dsq->SetPixelShader(m_pShaderBox->CreatePixelShader(_T("data/hlsl/PS_ScaleDown.cso")));
 }
 
-void ScaleDownMagic::Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView* pInSRV)
+void ScaleDownMagic::Render()
 {
 
 
 
-	m_pShaderBox->ChangeRenderTarget(0, pOutRTV);
+	m_pShaderBox->ChangeRenderTarget(0, m_pShaderBox->FinalRTV);
 	m_pShaderBox->ChangeRenderTarget(1, nullptr);
 	m_pShaderBox->SetRTsToShader();
 
-	m_pContext->PSSetShaderResources(0, 1, &pInSRV);
+	m_pContext->PSSetShaderResources(0, 1, &m_pShaderBox->pum_pSRVF32[3]);
 	//pEffect->SetTexture("t0", pShaderM->pHDRBlurTex);
 	//pEffect->SetTexture("t0", pShaderM->pFixedSizeTex);
 	//pd3ddev->SetRenderTarget(0, pShaderM->pDefaultBackBuffer);

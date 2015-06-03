@@ -142,7 +142,7 @@ public:
 	virtual void Move();
 	virtual void Draw();
 
-	void Render(ID3D11RenderTargetView* pOutRTV);
+	void Render();
 	void Render2(ID3D11RenderTargetView* pOutRTV); //’²®’†
 
 #ifdef _DEBUG

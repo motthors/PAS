@@ -60,7 +60,7 @@ void PASRender::Init(
 
 	// planet struct
 	AddPlanet();
-	AddPlanet();
+	//AddPlanet();
 
 	// ピクセルシェーダ
 	idPS_PAS = m_pShaderBox->CreatePixelShader(_T("data/hlsl/PAS_PS.cso"));
@@ -274,8 +274,10 @@ void PASRender::Draw()
 }
 
 
-void PASRender::Render(ID3D11RenderTargetView* pOutRTV)
+void PASRender::Render()
 {
+	m_pShaderBox->ChangeRenderTarget(0, (UINT)0);
+
 	// 行列計算/////////////////////////////////////////
 	vec Determinant;
 	mat V = XMLoadFloat4x4(&m_pShaderBox->matView);
@@ -331,7 +333,6 @@ void PASRender::Render(ID3D11RenderTargetView* pOutRTV)
 		m_pContext->PSSetShaderResources(3, 1, /*&m_InscatterView*/m_pPlanet[i]->GetRTV_ins());
 
 
-		m_pShaderBox->ChangeRenderTarget(0, pOutRTV);
 		m_pShaderBox->SetRTsToShader();
 		m_pContext->PSSetShaderResources(4, 1, &m_pRenderVarSRView[0]);
 		m_pContext->PSSetShaderResources(5, 1, &m_pRenderVarSRView[1]);
@@ -341,7 +342,6 @@ void PASRender::Render(ID3D11RenderTargetView* pOutRTV)
 
 	}
 
-
 	m_pContext->PSSetShaderResources(4, 1, &pnull);
 	m_pContext->PSSetShaderResources(5, 1, &pnull);
 
@@ -349,7 +349,7 @@ void PASRender::Render(ID3D11RenderTargetView* pOutRTV)
 	//m_p2Dsq->SetPixelShader(idPS_PAS);
 	//m_p2Dsq->Render();
 
-	m_pShaderBox->ChangeRenderTarget(0, nullptr);
+	//m_pShaderBox->ChangeRenderTarget(0, nullptr);
 	m_pShaderBox->SetRTsToShader();
 	m_pContext->OMSetBlendState(m_pDefaultBlendState, Colors::Black, 0xffffffff);
 }

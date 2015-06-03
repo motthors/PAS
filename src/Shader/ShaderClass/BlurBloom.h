@@ -23,8 +23,10 @@ class BlurBloom : public ShaderBase{
 
 	// CS Shader
 	ID3D11ComputeShader* m_pCScpy = nullptr;
+	ID3D11ComputeShader* m_pCScpy2 = nullptr;
 	ID3D11ComputeShader* m_pCSx = nullptr;
 	ID3D11ComputeShader* m_pCSy = nullptr;
+
 
 	// メイン画面のサイズ
 	float m_Width;
@@ -43,7 +45,7 @@ public:
 	void Init(DirectX11Base* pDx, ShaderBox* pSB, DebugTextureViewer* pDTV);
 	HRESULT CreateSurface();
 	void SetConstStruct();
-	void Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView* pInSRV);
+	void Render();
 
 	void up();
 	void down();

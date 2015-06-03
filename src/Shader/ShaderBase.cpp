@@ -66,7 +66,7 @@ void  ShaderBase::SetMatrix()
 	//pEffect->SetVector("vecCameraPos", &pos);
 }
 
-void ShaderBase::Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView* pInSRV)
+void ShaderBase::Render()
 {
 	//pEffect->SetTechnique( "Main" );
 	//pEffect->Begin( NULL, 0 );

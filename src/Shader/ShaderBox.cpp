@@ -1,4 +1,5 @@
 #include"ShaderBox.h"
+#include"../base/DefineRendering.h"
 #include <typeinfo.h>
 
 ShaderBox::ShaderBox()
@@ -10,9 +11,16 @@ ShaderBox::ShaderBox()
 	};
 	memcpy_s(m_pLayout, sizeof(t_Layout), t_Layout, sizeof(t_Layout));
 
-	FOR(MultiRTNum)m_ArrpRTV[i] = nullptr;	
+	FOR(MultiRTNum)m_ArrpRTV[i] = nullptr;
 	FOR(m_DepthStateNum)m_DepthStates[i] = nullptr;
 	m_pDepthStencilOff0On1[0] = nullptr;
+
+	FOR(m_TexF32Num)
+	{
+		pum_pTexF32[i] = nullptr;
+		pum_pRTVF32[i] = nullptr;
+		pum_pSRVF32[i] = nullptr;
+	}
 }
 
 
@@ -31,6 +39,10 @@ ShaderBox::~ShaderBox()
 	}
 	SAFE_DELETEARRAY(m_pLayout);
 	FOR(MultiRTNum)m_ArrpRTV[i] = nullptr;
+
+	FOR(m_TexF32Num)RELEASE(pum_pTexF32[i]);
+	FOR(m_TexF32Num)RELEASE(pum_pRTVF32[i]);
+	FOR(m_TexF32Num)RELEASE(pum_pSRVF32[i]);
 }
 
 
@@ -38,6 +50,26 @@ void ShaderBox::Init(DirectX11Base* pdx11)
 {
 	m_pDevice = pdx11->GetDevice();
 	m_pContext = pdx11->GetContext();
+
+	CreateTexture();
+}
+
+
+void ShaderBox::CreateTexture()
+{
+	FOR(m_TexF32Num)
+	{
+		CreateTexture2D(&pum_pTexF32[i],
+			nullptr, 0,
+			DefRender.RenderTargetX, DefRender.RenderTargetY,
+			DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+
+		CreateRTV(pum_pTexF32[i], &pum_pRTVF32[i],
+			DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_RTV_DIMENSION_TEXTURE2D);
+
+		CreateSRV(pum_pTexF32[i], &pum_pSRVF32[i],
+			DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_SRV_DIMENSION_TEXTURE2D);
+	}
 }
 
 
@@ -408,6 +440,10 @@ void ShaderBox::CreateUAV(
 void ShaderBox::ChangeRenderTarget(UINT index, ID3D11RenderTargetView* pRTV)
 {
 	m_ArrpRTV[index] = pRTV;
+}
+void ShaderBox::ChangeRenderTarget(UINT index, UINT pum_pRTVID)
+{
+	m_ArrpRTV[index] = pum_pRTVF32[pum_pRTVID];
 }
 void ShaderBox::SetRTsToShader()
 {

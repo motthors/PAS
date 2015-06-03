@@ -8,7 +8,12 @@ DebugTextureViewer::DebugTextureViewer()
 	FOR(MAX_SRV_NUM)m_arrSRVs[i] = nullptr;
 }
 
-DebugTextureViewer::~DebugTextureViewer(){}
+DebugTextureViewer::~DebugTextureViewer()
+{
+	SAFE_DELETE(m_p2Dsq);
+	RELEASE(m_pConstantBafferVS);
+	RELEASE(m_pConstantBafferPS);
+}
 
 
 void DebugTextureViewer::Init(DirectX11Base* pdx11, ShaderBox* pSB)

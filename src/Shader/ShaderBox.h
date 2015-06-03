@@ -60,9 +60,20 @@ public:
 	vec3 CameraDir; //vec3
 	vec3 LightDir;  //vec4
 
+	// シェーダグループ内共有テクスチャ
+	static const int			m_TexF32Num = 4;	//0:MainRT 1:Depth
+	ID3D11Texture2D*			pum_pTexF32[m_TexF32Num];
+	ID3D11RenderTargetView*		pum_pRTVF32[m_TexF32Num];
+	ID3D11ShaderResourceView*	pum_pSRVF32[m_TexF32Num];
+
+	ID3D11RenderTargetView*		FinalRTV;
+
+public:
 	ShaderBox();
 	~ShaderBox();
 	void Init(DirectX11Base* pdx11);
+	void CreateTexture();
+	
 
 	// シェーダー作成
 	UINT CreateVertexShader(TCHAR* csoName);
@@ -82,6 +93,7 @@ public:
 
 	// レンダーターゲット設定
 	void ChangeRenderTarget(UINT index, ID3D11RenderTargetView* pRTV);
+	void ChangeRenderTarget(UINT index, UINT pum_pRTVID);
 	void SetRTsToShader();
 	// Depth設定
 	void CreateDepthStencilStates();

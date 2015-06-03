@@ -19,7 +19,7 @@ public:
 
 	virtual void Init(DirectX11Base* pDx, ShaderBox* pSV, DebugTextureViewer* pDTV);
 	virtual void SetMatrix();
-	virtual void Render(ID3D11RenderTargetView* pOutRTV, ID3D11ShaderResourceView* pInSRV);
+	virtual void Render();
 				 
 	virtual void Begin();
 	virtual void End();

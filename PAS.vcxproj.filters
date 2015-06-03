@@ -636,5 +636,8 @@
     <FxCompile Include="src\hlsl\CS_Blur_h.hlsl">
       <Filter>ソース ファイル\hlsl\Blur</Filter>
     </FxCompile>
+    <FxCompile Include="src\hlsl\CS_Blur_Copy2.hlsl">
+      <Filter>ソース ファイル\hlsl\Blur</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
