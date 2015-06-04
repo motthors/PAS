@@ -570,7 +570,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">Compute</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release64|x64'">Compute</ShaderType>
     </FxCompile>
-    <FxCompile Include="src\hlsl\PAS_PS1_PreRender.hlsl">
+    <FxCompile Include="src\hlsl\PAS_PS_NoSun.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>

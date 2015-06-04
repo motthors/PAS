@@ -285,7 +285,7 @@ void ShaderManager::CreateCommonState()
 	D3D11_BLEND_DESC BlendDesc[m_BlendStateNum];
 	ZeroMemory(&BlendDesc, sizeof(BlendDesc));
 	BlendDesc[0].AlphaToCoverageEnable = FALSE;
-	BlendDesc[0].IndependentBlendEnable = FALSE;
+	BlendDesc[0].IndependentBlendEnable = TRUE;
 	BlendDesc[0].RenderTarget[0].BlendEnable = TRUE;
 	BlendDesc[0].RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	BlendDesc[0].RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
@@ -294,7 +294,15 @@ void ShaderManager::CreateCommonState()
 	BlendDesc[0].RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 	BlendDesc[0].RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	BlendDesc[0].RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	
+	BlendDesc[0].RenderTarget[1].BlendEnable = TRUE;
+	BlendDesc[0].RenderTarget[1].SrcBlend = D3D11_BLEND_ONE;
+	BlendDesc[0].RenderTarget[1].DestBlend = D3D11_BLEND_ZERO;
+	BlendDesc[0].RenderTarget[1].BlendOp = D3D11_BLEND_OP_ADD;
+	BlendDesc[0].RenderTarget[1].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendDesc[0].RenderTarget[1].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc[0].RenderTarget[1].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendDesc[0].RenderTarget[1].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
 	BlendDesc[1].AlphaToCoverageEnable = FALSE;
 	BlendDesc[1].IndependentBlendEnable = FALSE;
 	BlendDesc[1].RenderTarget[0].BlendEnable = TRUE;
@@ -468,11 +476,12 @@ void ShaderManager::Draw()
 	m_vp.Height = static_cast<float>(DefRender.RenderTargetY);
 	m_pContext->RSSetViewports(1, &m_vp);
 
+	m_pShaderBox->SetDepthFlag(0);
 
 	//m_pShaderBox->ChangeRenderTarget(0, pFixedSizeRTV);
 	//m_pShaderBox->ChangeRenderTarget(1, m_pMyDepthRTView);
 	m_pShaderBox->ChangeRenderTarget(0, (UINT)0);
-	m_pShaderBox->ChangeRenderTarget(0, 1);
+	m_pShaderBox->ChangeRenderTarget(1, 1);
 	m_pShaderBox->SetRTsToShader();
 
 	//pd3ddev->SetRenderTarget( 0, pFixedSizeSurface );	
@@ -496,7 +505,7 @@ void ShaderManager::Draw()
 	//}
 
 
-	//‘å‹CŽU—ƒVƒ~ƒ…•`‰æ@PAS  
+	//‘å‹CŽU—ƒVƒ~ƒ…•`‰æ@PAS 
 	pPASCT->Render();
 
 	// BBB•`‰æ
@@ -546,10 +555,11 @@ void ShaderManager::BeginDraw()
 {
 	// Clear the back buffer
 	float	clearColor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	float	clearDepth[] = { 1, 0.0f, 0.0f, 0.0f };
 	m_pContext->ClearRenderTargetView(m_pRenderTargetView, clearColor);
 	m_pContext->ClearRenderTargetView(m_pShaderBox->pum_pRTVF32[0], clearColor);
-	m_pContext->ClearRenderTargetView(m_pShaderBox->pum_pRTVF32[1], Colors::White);
-	m_pContext->ClearRenderTargetView(m_pShaderBox->pum_pRTVF32[3], Colors::White);
+	m_pContext->ClearRenderTargetView(m_pShaderBox->pum_pRTVF32[1], clearDepth);
+	m_pContext->ClearRenderTargetView(m_pShaderBox->pum_pRTVF32[3], clearColor);
 	
 	// Clear the depth buffer to 1.0 (max depth)
 	m_pContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);

@@ -213,6 +213,7 @@ void RootManager::GameLoopNonPararell()
 			//XMStoreFloat4x4(&v, *pc->GetView());
 			//XMStoreFloat4x4(&p, *pc->GetPers());
 			//XMStoreFloat3(&c, *);
+			memcpy_s(&pShaderBox->CameraPos, sizeof(vec3), pc->GetCameraPos(), sizeof(vec3));
 			pShaderBox->SetMatrixVector(pc->GetView(), pc->GetPers(), pc->GetCameraPos());
 			pShaderM->BeginDraw();
 			pShaderM->Draw();

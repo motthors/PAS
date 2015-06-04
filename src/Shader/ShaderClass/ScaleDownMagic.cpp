@@ -21,8 +21,6 @@ void ScaleDownMagic::Init(DirectX11Base* pDx, ShaderBox* pSB, DebugTextureViewer
 void ScaleDownMagic::Render()
 {
 
-
-
 	m_pShaderBox->ChangeRenderTarget(0, m_pShaderBox->FinalRTV);
 	m_pShaderBox->ChangeRenderTarget(1, nullptr);
 	m_pShaderBox->SetRTsToShader();

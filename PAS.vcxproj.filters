@@ -600,9 +600,6 @@
     <FxCompile Include="src\hlsl\PAS_CS9_insCpyN.hlsl">
       <Filter>ソース ファイル\hlsl\PAS\CS</Filter>
     </FxCompile>
-    <FxCompile Include="src\hlsl\PAS_PS1_PreRender.hlsl">
-      <Filter>ソース ファイル\hlsl\PAS</Filter>
-    </FxCompile>
     <FxCompile Include="src\hlsl\PAS_PS2_Ground.hlsl">
       <Filter>ソース ファイル\hlsl\PAS</Filter>
     </FxCompile>
@@ -638,6 +635,9 @@
     </FxCompile>
     <FxCompile Include="src\hlsl\CS_Blur_Copy2.hlsl">
       <Filter>ソース ファイル\hlsl\Blur</Filter>
+    </FxCompile>
+    <FxCompile Include="src\hlsl\PAS_PS_NoSun.hlsl">
+      <Filter>ソース ファイル\hlsl\PAS</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

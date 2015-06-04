@@ -464,7 +464,7 @@ void ShaderBox::CreateDepthStencilStates()
 	//// Depth ON Less WriteOK////
 	dsDesc[1].DepthEnable = TRUE;
 	dsDesc[1].DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	dsDesc[1].DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	dsDesc[1].DepthFunc = D3D11_COMPARISON_LESS;
 	dsDesc[1].StencilEnable = FALSE;
 	//// Depth ON AllOK WritNO ////
 	dsDesc[2].DepthEnable = TRUE;

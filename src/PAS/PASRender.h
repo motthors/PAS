@@ -60,10 +60,7 @@ protected:
 	//int		meshidPlanet;
 	// シェーダ
 	UINT	idPS_PAS;
-	UINT	idPS_PrePAS;
-	UINT	idPS_PAS_Ground;
-	UINT	idPS_PAS_Atmosphere;
-	UINT	idPS_PAS_Sun;
+	UINT	idPS_PAS2;
 
 	///////////////////////////////////////
 
@@ -100,8 +97,6 @@ protected:
 
 	// 親からもらうデフォルトブレンドステート
 	ID3D11BlendState* m_pDefaultBlendState = nullptr;
-	// 描画用パラメータ保存テクスチャ用ブレンドステート
-	ID3D11BlendState* m_pRenderPalamBlendState = nullptr;
 	// 各光描画用加算合成ブレンドステート
 	ID3D11BlendState* m_pAddBlendState = nullptr;
 
@@ -142,6 +137,7 @@ public:
 	virtual void Move();
 	virtual void Draw();
 
+	void SortPlanet();
 	void Render();
 	void Render2(ID3D11RenderTargetView* pOutRTV); //調整中
 

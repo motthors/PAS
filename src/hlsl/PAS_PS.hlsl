@@ -190,6 +190,8 @@ struct PS_IN
 struct PS_OUT
 {
 	float4 MainCol	: SV_TARGET0;
+	//float4  Depth	: SV_TARGET1;
+	//float sv_depth : SV_DEPTH;
 };
 
 PS_OUT main( PS_IN In )
@@ -220,13 +222,27 @@ PS_OUT main( PS_IN In )
 	//else if (cone) {
 	//	t = d;
 	//}
+	// 深度バッファ用Depth計算
+	if (t >= 0){
+		Out.MainCol.a = 0;
+		//Out.Depth.r = r / 10000000.0;
+		//Out.Depth.a = 1;// r / 3e37;
+		//Out.sv_depth = r / 10000000.0; //temp
+	}
+	else{
+		Out.MainCol.a = 1;
+		//Out.Depth.r = 1;
+		////Out.Depth.a = 1;
+		///Out.sv_depth = 0.99;
+	}
+
 
 	float3 attenuation;
 	float3 inscatterCol = inscatter(x, t, v, s.xyz, r, mu, attenuation); //S[L]-T(x,xs)S[l]|xs
 	float3 groundCol = groundColor(x, t, v, s.xyz, r, mu, attenuation); //R[L0]+R[L*]
 	float3 sunCol = sunColor(x, t, v, s.xyz, r, mu); //L0
 	//Out.MainCol = float4(TransColor(sunCol + groundCol + inscatterCol), 1); // Eq (16)
-	Out.MainCol = float4(TransColor(sunCol + groundCol + inscatterCol), 1); // Eq (16)
+	Out.MainCol.xyz = float3(TransColor(sunCol + groundCol + inscatterCol));
 	//Out.MainCol = float4(HDR(groundCol), 1);
 	//float test = (r > Rg*2) ? 1.0 : 0;
 	//float test2 = sqrt(mu*mu*2 - 1.0);

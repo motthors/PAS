@@ -33,7 +33,6 @@ PASRender::~PASRender()
 	FOR(m_RVnum)RELEASE(m_pRenderVarSRView[i]);
 	FOR(m_RVnum)RELEASE(m_pRenderVarRTView[i]);
 
-	RELEASE(m_pRenderPalamBlendState);
 	RELEASE(m_pAddBlendState);
 
 	SAFE_DELETE(m_p2Dsq);
@@ -60,14 +59,11 @@ void PASRender::Init(
 
 	// planet struct
 	AddPlanet();
-	//AddPlanet();
+	AddPlanet();
 
 	// ピクセルシェーダ
 	idPS_PAS = m_pShaderBox->CreatePixelShader(_T("data/hlsl/PAS_PS.cso"));
-	idPS_PrePAS = m_pShaderBox->CreatePixelShader(_T("data/hlsl/PAS_PS1_PreRender.cso"));
-	idPS_PAS_Ground = m_pShaderBox->CreatePixelShader(_T("data/hlsl/PAS_PS2_Ground.cso"));
-	idPS_PAS_Atmosphere = m_pShaderBox->CreatePixelShader(_T("data/hlsl/PAS_PS3_Atmosphere.cso"));
-	idPS_PAS_Sun = m_pShaderBox->CreatePixelShader(_T("data/hlsl/PAS_PS4_Sun.cso"));
+	idPS_PAS2 = m_pShaderBox->CreatePixelShader(_T("data/hlsl/PAS_PS_NoSun.cso"));
 
 	m_p2Dsq = new D3D2DSQUARE(pdx11, pSB, DefRender.RenderTargetX, DefRender.RenderTargetY);
 	m_p2Dsq->Init();
@@ -167,17 +163,15 @@ void PASRender::CreateBlendState(ID3D11BlendState* p)
 
 	ZeroMemory(&BlendDesc, sizeof(BlendDesc));
 	BlendDesc.AlphaToCoverageEnable = FALSE;
-	BlendDesc.IndependentBlendEnable = FALSE;
-	// 0番　上書き
+	BlendDesc.IndependentBlendEnable = TRUE;
 	BlendDesc.RenderTarget[0].BlendEnable = TRUE;
 	BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
-	BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
+	BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_SRC_ALPHA;
 	BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 	BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	// 1番 深度　より小さかったら描画
 	BlendDesc.RenderTarget[1].BlendEnable = TRUE;
 	BlendDesc.RenderTarget[1].SrcBlend = D3D11_BLEND_ONE;
 	BlendDesc.RenderTarget[1].DestBlend = D3D11_BLEND_ONE;
@@ -186,33 +180,6 @@ void PASRender::CreateBlendState(ID3D11BlendState* p)
 	BlendDesc.RenderTarget[1].DestBlendAlpha = D3D11_BLEND_ZERO;
 	BlendDesc.RenderTarget[1].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	BlendDesc.RenderTarget[1].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	// 2番　上書き　ただしアルファ成分だけ最小値を返すように
-	memcpy_s(&BlendDesc.RenderTarget[2], sizeof(BlendDesc.RenderTarget[0]),
-		&BlendDesc.RenderTarget[0], sizeof(BlendDesc.RenderTarget[0]));
-	BlendDesc.RenderTarget[2].SrcBlendAlpha = D3D11_BLEND_ONE;
-	BlendDesc.RenderTarget[2].DestBlendAlpha = D3D11_BLEND_ONE;
-	BlendDesc.RenderTarget[2].BlendOpAlpha = D3D11_BLEND_OP_MIN;
-
-	hr = m_pDevice->CreateBlendState(&BlendDesc, &m_pRenderPalamBlendState);
-	if (FAILED(hr))
-	{
-		ErrM.SetClassName(_T("PASRender::CreateBlendState::CreateBlendState"));
-		ErrM.SetErrorText(_T("ブレンドステート作成に失敗"));
-		ErrM.SetHResult(hr);
-		throw &ErrM;
-	}
-
-	ZeroMemory(&BlendDesc, sizeof(BlendDesc));
-	BlendDesc.AlphaToCoverageEnable = FALSE;
-	BlendDesc.IndependentBlendEnable = FALSE;
-	BlendDesc.RenderTarget[0].BlendEnable = TRUE;
-	BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
-	BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
-	BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-	BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	hr = m_pDevice->CreateBlendState(&BlendDesc, &m_pAddBlendState);
 	if (FAILED(hr))
@@ -274,9 +241,29 @@ void PASRender::Draw()
 }
 
 
+void PASRender::SortPlanet()
+{
+	//惑星2個だけ限定処理　とりあえず
+	float r[MaxPlanetNum];
+	FOR(m_PlanetNum)
+	{
+		vec v = XMLoadFloat3(m_pPlanet[i]->GetPos());
+		vec c = XMLoadFloat3(&m_pShaderBox->CameraPos);
+		v = c - v;
+		XMStoreFloat(&r[i], XMVector3Length(v));
+	}
+	if (r[0] < r[1])
+	{
+		auto temp = m_pPlanet[0];
+		m_pPlanet[0] = m_pPlanet[1];
+		m_pPlanet[1] = temp;
+	}
+}
+
+
 void PASRender::Render()
 {
-	m_pShaderBox->ChangeRenderTarget(0, (UINT)0);
+	SortPlanet();
 
 	// 行列計算/////////////////////////////////////////
 	vec Determinant;
@@ -339,7 +326,6 @@ void PASRender::Render()
 		//m_pContext->PSSetShaderResources(6, 1, &pDepthSRV);
 		m_p2Dsq->SetPixelShader(idPS_PAS);
 		m_p2Dsq->Render();
-
 	}
 
 	m_pContext->PSSetShaderResources(4, 1, &pnull);
@@ -416,7 +402,7 @@ void PASRender::Render2(ID3D11RenderTargetView* pOutRTV)
 		m_pContext->PSSetShaderResources(3, 1, /*&m_InscatterView*/m_pPlanet[i]->GetRTV_ins());
 
 		/// pass 1 : Render t,T,mu to Texture ///
-		m_pContext->OMSetBlendState(m_pRenderPalamBlendState, Colors::Black, 0xffffffff);
+		///////m_pContext->OMSetBlendState(m_pRenderPalamBlendState, Colors::Black, 0xffffffff);
 		//m_pShaderBox->ChangeRenderTarget(0, pOutRTV);
 		m_pShaderBox->ChangeRenderTarget(0, m_pRenderVarRTView[0]);
 		m_pShaderBox->ChangeRenderTarget(2, m_pRenderVarRTView[1]);

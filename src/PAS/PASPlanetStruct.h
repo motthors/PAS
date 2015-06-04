@@ -105,6 +105,7 @@ public:
 	ID3D11ShaderResourceView**	GetRTV_irr(){ return &m_IrradianceView; }
 	ID3D11ShaderResourceView**	GetRTV_ins(){ return &m_InscatterView; }
 
+	vec3* GetPos(){ return &m_PlanetPos; }
 };
 
 #endif
